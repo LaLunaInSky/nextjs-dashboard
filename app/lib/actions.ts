@@ -56,15 +56,12 @@ export async function createInvoice(prevState: State, formData: FormData){
             INSERT INTO invoices (customer_id, amount, status, date)
             VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
         `
-        console.log('1')
         revalidatePath("/dashboard/invoices")
     } catch (error) {
-        console.log("2")
         return {
             message: "Database Error: Failed to Create Invoice."
         }
     } finally {
-        console.log('3')
         redirect("/dashboard/invoices")
     }
 }
@@ -93,9 +90,10 @@ export async function updateInvoice(id: string, prevState: State,formData: FormD
             WHERE id = ${id}
         `
         revalidatePath("/dashboard/invoices")
-        redirect("/dashboard/invoices")
     } catch (error) {
         return { message: "Database Error: Failed to Update Invoice." }
+    } finally {
+        redirect("/dashboard/invoices")
     }
 }
 
